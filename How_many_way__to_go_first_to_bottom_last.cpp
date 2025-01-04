@@ -4,18 +4,18 @@ using namespace std;
 #define endl "\n"
 double pi = 3.141592653589793238462643383279;
 
-int fact(int n) {
-	if (n == 1) {
+int grid_count(int n, int m) {
+	if (n == 1 || m == 1) {
 		return 1;
 	} else {
-		return n * fact(n - 1);
+		return grid_count(n, m - 1) + grid_count(n - 1, m);
 	}
 }
 
 void solve() {
-	int n;
-	cin >> n;
-	cout << fact(n) << endl;
+	int n, m;
+	cin >> n >> m;
+	cout << grid_count(n, m) << endl;
 }
 
 signed main() {
