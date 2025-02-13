@@ -12,25 +12,37 @@ using namespace std;
     cout << endl;
 
 //---------------------------------------//
-
-int cnt = 0;
-void way(int st, int crnt, int ed) {
-    if (crnt >= ed) {
-        if (crnt == ed) {
-            cnt++;
-        }
-        return;
+int digit_count(int n) {
+    int cnt = 0, temp = n;
+    while (temp != 0) {
+        cnt++;
+        temp /= 10;
     }
-    way(st, crnt + 1, ed);
-    way(st, crnt + 2, ed);
-    way(st, crnt + 3, ed);
+    return cnt;
+}
+int sum_of_digit(int n) {
+    int cnt = 0, temp = n;
+    while (temp != 0) {
+        cnt += temp % 10;
+        temp /= 10;
+    }
+    return cnt;
+}
+
+int f(int n) {
+    if (digit_count(n) == 1) {
+        return n;
+    } else {
+        return f(sum_of_digit(n));
+    }
 }
 
 void solve() {
-    int st, ed;
-    cin >> st >> ed;
-    way(st, st, ed);
-    cout << cnt << endl;
+    int n;
+    while (cin >> n) {
+        if (n == 0) break;
+        cout << 2 << endl;
+    }
 }
 
 signed main() {

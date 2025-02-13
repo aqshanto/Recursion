@@ -13,33 +13,37 @@ using namespace std;
 
 //---------------------------------------//
 
-bool ispossible(int index, int sum, int target_sum, vector<int>& v) {
-    if (index >= v.size()) {
-        if (sum == target_sum) {
-            return true;
+int func(vector<int>& v, int low, int high) {
+    int pivot = v[low];
+    int i = low, j = high;
+    while (i < j) {
+        while (v[i] <= pivot && i <= high) {
+            i++;
         }
-        return false;
+        while (v[j] > pivot && j >= low) {
+            j--;
+        }
+        if (i < j) swap(v[i], v[j]);
     }
-    sum += v[index];
-    if (ispossible(index + 1, sum, target_sum, v)) {
-        return true;
+    swap(v[low], v[j]);
+    return j;
+}
+
+void quick_sort(vector<int>& v, int low, int high) {
+    if (low < high) {
+        int partition_index = func(v, low, high);
+        quick_sort(v, low, partition_index - 1);
+        quick_sort(v, partition_index + 1, high);
     }
-    sum -= v[index];
-    sum -= v[index];
-    if (ispossible(index + 1, sum, target_sum, v)) return true;
-    return false;
 }
 
 void solve() {
-    int n, target_sum;
-    cin >> n >> target_sum;
+    int n;
+    cin >> n;
     vector<int> v(n);
     inputarr(v, n);
-    if (ispossible(0, 0, target_sum, v)) {
-        cout << "YES" << endl;
-    } else {
-        cout << "NO" << endl;
-    }
+    quick_sort(v, 0, n - 1);
+    printarr(v);
 }
 
 signed main() {
